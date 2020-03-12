@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap %}
+{% load bootstrap_tags %}
+{%block nav%}
+    {%include 'blog/includes/card_nav.html'%}
+{%endblock%}
+{% block content %}
+    <h5 class="mt-4">Подтвердите удаление</h5>
+    <form method="post">
+        {% csrf_token %}
+        <input class ="btn btn-primary mt-3" type="submit" value="Удалить">
+        <a class ="btn btn-primary mt-3" href="{% url 'post_detail' pk=comment.post.pk %}">Отмена</a>
+    </form>
+{% endblock %}

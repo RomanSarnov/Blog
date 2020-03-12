@@ -1,0 +1,29 @@
+{%extends 'blog/base.html'%}
+{% load bootstrap %}
+{% load bootstrap_tags %}
+{%block nav%}
+    {%include 'blog/includes/card_nav.html'%}
+{%endblock%}
+{%block content%}
+    {% if request.user == comments.comment_author or comments.post.author == request.user%}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {%for field in form%}
+            <div class="form-group">
+                {%if field.errors%}
+                    <div class="alert alert-danger">
+                        {{field.errors}}
+                    </div>
+                {%endif%}
+                {{field|bootstrap}}
+            </div>
+        {%endfor%}
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+        </form>
+    {% else %}
+        <h2>Вы не можете изменить этот комментарий.</h2>
+        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Назад</a>
+    {% endif %}
+{%endblock%}

@@ -1,0 +1,26 @@
+{% with url_name=request.resolver_match.url_name %}
+<nav class="navbar navbar-expand-lg  navbar-dark bg-primary">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="{% if url_name == 'index' %}nav-link disabled {%else%} nav-link active {% endif %}" href="{%url 'index' %}">Посты
+            <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="{% if url_name == 'user_detail' and user == customuser%}nav-link disabled {%else%} nav-link active {% endif %}"
+           href="{%if request.user.is_authenticated %}{%url 'user_detail' pk=user.pk%}{%else%}{%url 'log'%}{%endif%}">Профиль
+            <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="{% if url_name == 'users_list' %}nav-link disabled {%else%} nav-link active {% endif %}" href="{%url 'users_list'%}">Пользователи</a>
+      </li>
+      <li class="nav-item active">
+        <a href="{% url 'post_create' %}"class="nav-link active">Создать пост</a>
+      </li>
+    </ul>
+    <div class="nav-item active">
+        <a class="nav-link active" href="{% url 'account_logout' %}" style="color: #fff;">Выйти</a>
+    </div>
+  </div>
+</nav>
+{%endwith%}

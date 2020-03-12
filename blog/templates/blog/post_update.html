@@ -1,0 +1,20 @@
+{%extends 'blog/base.html'%}
+{% load bootstrap %}
+{% load bootstrap_tags %}
+{%block nav%}
+    {%include 'blog/includes/card_nav.html'%}
+{%endblock%}
+
+{%block content%}
+    {% if request.user == post.author%}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|bootstrap}}
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+        </form>
+    {% else %}
+        <h2>Вы не можете изменить этот комментарий.</h2>
+    {% endif %}
+{%endblock%}

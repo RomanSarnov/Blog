@@ -1,0 +1,25 @@
+{% extends "account/base.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block content_title %}{% endblock %}
+{% block title %}Выход{% endblock %}
+{% block content %}
+ <div class="container" style="width: 30%;">
+        <div class="row">
+             <div class="col-3 mt-5">
+                <h1>{% trans "Sign Out" %}</h1>
+                <p>{% trans 'Are you sure you want to sign out?' %}</p>
+                <form method="post" action="{% url 'account_logout' %}" >
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                {% buttons %}
+                {% bootstrap_button "Выход" button_type="submit" button_class="btn-primary"%}
+                {% endbuttons %}
+                </form>
+              </div>
+         </div>
+    </div>
+{% endblock %}

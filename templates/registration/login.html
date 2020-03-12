@@ -1,0 +1,42 @@
+{% load bootstrap %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вход</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container " >
+        <div class="row">
+            <div class="col-3">
+
+            </div>
+        </div>
+    </div>
+
+    {%if next%}
+    <form method="post">
+    {%else%}
+    <form action="{% url 'index' %}" method="post"></form>
+    {%endif%}
+        {%csrf_token%}
+        <div class="container" style="width: 30%;">
+            <div class="row">
+                <div class="col-3 mt-5">
+                    <h1 class="mb-2">Вход</h1>
+                    {{form|bootstrap}}
+                    {% if errors %}
+                        {{ errors }}
+                    {% endif %}
+                    <input class="btn btn-primary" id="submit-btn" type="submit" value="Войти">
+                    <a class="btn btn-primary"> Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

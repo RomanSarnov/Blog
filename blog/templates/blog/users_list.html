@@ -1,0 +1,24 @@
+{%extends 'blog/base.html'%}
+{%load staticfiles%}
+{%block nav%}
+    {%include 'blog/includes/card_nav.html'%}
+{%endblock%}
+{%block content%}
+    <form class="form-inline mt-3" action="{%url 'users_list'%}">
+      <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
+      <button class="btn btn-outline-primary" type="submit">Поиск</button>
+    </form>
+    <ul class="list-group">
+        {%for user in users%}
+        <li class="media mt-5">
+            <a href="{%url 'user_detail' pk=user.pk%}"><img src="{%if user.avatar%}{{user.avatar.url}}
+            {%else%}{%static 'mysite/image/avatar.png'%}{%endif%}" class="mr-3" alt="..." width="64" height="64"></a>
+            <div class="media-body">
+                <a href="{%url 'user_detail' pk=user.pk%}" style="">{{user.username}}</a><br>
+            </div>
+        </li>
+        {% empty %}
+            <h6 class="mt-4">По вашему запросу не найдено ни одного пользователя.</h6>
+        {%endfor%}
+    </ul>
+{%endblock%}

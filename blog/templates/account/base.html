@@ -1,0 +1,25 @@
+
+{% load bootstrap3 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="vieport" content="width=device-width">
+    <title>{% block title %}{% endblock %}</title>
+    {% bootstrap_css %}
+</head>
+<body>
+    <div class="page">
+        <div class="main-login">
+            <header>
+                <h2>{% block content-title %}{% endblock %}
+                </h2>
+            </header>
+            <div class="main-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+{%extends 'blog/base.html'%}
+{%load staticfiles%}
+{%block nav%}
+    {%include 'blog/includes/card_nav.html'%}
+{%endblock%}
+{%block content%}
+    <div class="card mt-5 mb-5" style="width: 18rem;">
+        <img src="{%if customuser.avatar%}{{customuser.avatar.url}}{%else%}{%static 'mysite/image/avatar.png'%}{%endif%}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{customuser.username}}</h5>
+            <p class="card-title">{{customuser.first_name}} {{customuser.last_name}}</p>
+            <p class="card-title">{{customuser.email}}</p>
+            <p class="card-text">День рождения: {%if customuser.birthday%}{{customuser.birthday}}{%else%}не
+            указан{%endif%}</p>
+            {%if request.user == customuser%}
+            <a href="{%url 'user_update' pk=customuser.pk%}" class="btn btn-primary">Редактировать</a>
+            {%endif%}
+        </div>
+    </div>
+    {%for post in customuser.posts.all%}
+        <div class="card mb-5">
+            <div class="card-header">
+            {{post.date_pub}}
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">{{post.title|truncatechars:35|truncatewords:15}}</h4>
+                <p class="card-text">{{post.body|truncatechars:100|truncatewords:25}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"></li>
+                {%for comm in post.comments.all|slice:":2"%}
+                    <li class="list-group-item">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-2">
+                                    <a href="{%url 'user_detail' pk=comm.comment_author.pk%}"><img src="{%if customuser.avatar%}{{customuser.avatar.url}}
+                                    {%else%}{%static 'mysite/image/avatar.png'%}{%endif%}" class="card-img-top"  width="44px" height="44px"></a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="" href="{%url 'user_detail' pk=comm.comment_author.pk%}" style="display: inline-block">{{comm.comment_author}}</a>
+                                    <p class="" style="font-size: 15px">{{comm|truncatechars:20|truncatewords:7}}</p>
+                                </div>
+                                {% if comm.comment_author == request.user or customuser == request.user %}
+                                    <div class="col-4">
+                                        <a class="btn btn-light " href="{% url 'comment_update' pk=comm.pk %}" style="font-size: 13px">Редактировать</a>
+                                        <a class="btn btn-light " href="{% url 'comment_delete' pk=comm.pk %}" style="font-size: 13px">Удалить</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                {%endfor%}
+            </ul>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        {%if request.user == customuser%}
+                        <a href="{%url 'comment_create' pk=post.pk%}" class="btn btn-light">Оставить комментарий</a>
+                            <a href="{%url 'post_detail' pk=post.pk%}" class="btn btn-light">Подробнее</a>
+                        <a href="{%url 'post_update' pk=post.pk%}" class="btn btn-light ml-3">Редактировать</a>
+                        {%else%}
+                            <a href="{%url 'comment_create' pk=post.pk%}" class="btn btn-light ml-5">Оставить
+                                комментарий</a>
+                            <a href="{%url 'post_detail' pk=post.pk%}" class="btn btn-light ml-5">Подробнее</a>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%endfor%}
+{%endblock%}

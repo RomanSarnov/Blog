@@ -1,0 +1,20 @@
+{%extends 'blog/base.html'%}
+{% load static %}
+{%block title%}
+    Список постов
+{%endblock%}
+{%block nav%}
+    {%include 'blog/includes/card_nav.html'%}
+{%endblock%}
+{%block content%}
+    <form class="form-inline mb-3 mt-3" action="{% url 'index' %}">
+      <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
+      <button class="btn btn-outline-primary" type="submit">Поиск</button>
+    </form>
+    {%for post in posts%}
+        {%include 'blog/includes/card_post.html'%}
+    {% empty %}
+        <h6 class="mt-3">По вашему запросу не найдено ни одного поста.</h6>
+    {%endfor%}
+{%endblock%}
+
